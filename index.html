@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+
+<!-- HEAD TAG -->
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- CSS -->
+    <link rel="stylesheet" href="styles.css">
+    <!-- jQuery è lo script che va messo prima di ogni altro -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <!-- JAVASCRIPT -->
+    <script type="text/javascript" src="script.js"></script>
+
+    <title>Pomodoro App</title>
+</head>
+
+<!-- BODY TAG -->
+
+<body>
+    <section id="header">
+        <p class="text-center" id="header-text">25 + 5 Clock App</p>
+    </section>
+    <div class="container">
+
+        <div class="row">
+            <div id="break-controls" class="col-6">
+                <h3 id="break-label">Break Length</h3>
+                <button type="button" id="break-increment" class="btn"><i
+                        class="fa-sharp fa-solid fa-arrow-up"></i></button>
+                <span id="break-length"></span>
+                <button type="button" id="break-decrement" class="btn"><i
+                        class="fa-sharp fa-solid fa-arrow-down"></i></button>
+            </div>
+            <div id="session-controls" class="col-6">
+                <h3 id="session-label">Session Length</h3>
+                <button type="button" id="session-increment" class="btn"><i
+                        class="fa-sharp fa-solid fa-arrow-up"></i></button>
+                <span id="session-length"></span>
+                <button type="button" id="session-decrement" class="btn"><i
+                        class="fa-sharp fa-solid fa-arrow-down"></i></button>
+            </div>
+        </div>
+        <div class="timer col mx-auto justify-content-between align-self-center">
+                <h2 id="timer-label">Session</h2>
+                <div id="time-left"></div>
+                <button type="button" id="start_stop" class="btn btn-success"><i class="fa-regular fa-circle-play"></i></button>
+                <button type="button" id="reset" class="btn btn-danger"><i class="fa-solid fa-rotate-right"></i></button>
+        </div>
+        <audio id="beep"
+            src="https://raw.githubusercontent.com/freeCodeCamp/cdn/master/build/testable-projects-fcc/audio/BeepSound.wav"
+            muted></audio>
+    </div>
+    <section id="footer">
+        <p class="text-center" id="footer-text">by Marco Falotico</p>
+    </section>
+
+
+
+    <!-- Optional JavaScript -->
+    <!-- Popper.js, then Bootstrap JS -->
+
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.freecodecamp.org/testable-projects-fcc/v1/bundle.js"></script>
+</body>
+
+</html>
