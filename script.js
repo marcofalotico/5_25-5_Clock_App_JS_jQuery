@@ -1,48 +1,49 @@
 /* Uso jQuery per rendere manipolabili e modificabili le variabili dei vari timer.
 Prima imposto la document ready function, che esegue ciò che sta al suo interno dopo che è stato compilato tutto il codice */
 $(document).ready(function () {
-	// Global variables
+	//Global Variables
 	let breakCtr = 5;
 	let sessionCtr = 25;
 	let tmp = "";
 	let isPlay = false;
-	let dispVal = 0;
+	let dispVal;
 	let dispValMin = 0;
 	let dispValSec = 0;
 	let setInt_ID = 0;
 	let isBreak = false;
 
-	// Code start
+	//Code start
 	$("#break-length").text(breakCtr);
 	$("#session-length").text(sessionCtr);
 	tmp = sessionCtr + ":" + "00";
 	$("#time-left").text(tmp);
 
 	// Aumento e decremento con i bottoni SOLO quando il timer è spento (isPlay===false), aumentando solo fino max 60 e min 1
-	if (isPlay === false) {
-		$("#break-increment").click(() => {
+	if (isBreak === false) {
+		$("#break-increment").click(function () {
 			if (breakCtr < 60) {
-				breakCtr += 1;
+				breakCtr++;
 				$("#break-length").text(breakCtr);
 			}
 		});
-		$("#break-decrement").click(() => {
+		$("#break-decrement").click(function () {
 			if (breakCtr > 1) {
-				breakCtr -= 1;
+				breakCtr--;
 				$("#break-length").text(breakCtr);
 			}
 		});
-		$("#session-increment").click(() => {
+		$("#session-increment").click(function () {
 			if (sessionCtr < 60) {
-				sessionCtr += 1;
+				sessionCtr++;
 				$("#session-length").text(sessionCtr);
 			}
 			tmp = sessionCtr + ":" + "00";
 			$("#time-left").text(tmp);
 		});
-		$("#session-decrement").click(() => {
+
+		$("#session-decrement").click(function () {
 			if (sessionCtr > 1) {
-				sessionCtr -= 1;
+				sessionCtr--;
 				$("#session-length").text(sessionCtr);
 			}
 			tmp = sessionCtr + ":" + "00";
@@ -50,52 +51,60 @@ $(document).ready(function () {
 		});
 	}
 
-    // aggiorno il display del timer con il formato mm:ss
+	// aggiorno il display del timer con il formato mm:ss
 	const updateDisplay = () => {
-        let min = "";
-        let sec = "";
-        dispValMin < 10 ? min = "0" + dispValMin : min = dispValMin;
-        dispValSec < 10 ? sec = "0" + dispValSec : sec = dispValSec;
-        // aggiorno quindi il display del timer con il nuovo formato
-        $("#time-left").text(min + ":" + sec);
-    }
+		let min = "";
+		let sec = "";
+		if (dispValSec < 10) {
+			sec = "0" + dispValSec;
+		} else sec = dispValSec;
+		if (dispValMin < 10) {
+			min = "0" + dispValMin;
+		} else min = dispValMin;
+		// aggiorno quindi il display del timer con il nuovo formato
+		$("#time-left").text(min + ":" + sec);
+	};
 
 	const updateTimer = () => {
+		// countdown session length
 		if (isBreak === false) {
-			// countdown session length
 			if (dispValMin >= 1 && dispValSec === 0) {
+				//to update and display timer
 				dispValSec = 59;
-				dispValMin -= 1;
+				dispValMin--;
 				updateDisplay();
 			} else if (dispValMin >= 0 && dispValSec !== 0) {
-				dispValSec -= 1;
+				//to update and display timer
+				dispValSec--;
 				updateDisplay();
 			} else if (dispValMin === 0 && dispValSec === 0) {
 				isBreak = true;
 				dispValMin = breakCtr;
 				dispValSec = 0;
 				$("#timer-label").text("Break");
+				updateDisplay();
 				document.getElementById("beep").play();
 				document.getElementById("beep").muted = false;
-				updateDisplay();
 			}
-		} else if (isBreak) {
+		} else if (isBreak === true) {
 			// countdown break length, uguale al precedente se non per l'ultimo else if statement
 			if (dispValMin >= 1 && dispValSec === 0) {
+				//to update and display timer
 				dispValSec = 59;
-				dispValMin -= 1;
+				dispValMin--;
 				updateDisplay();
 			} else if (dispValMin >= 0 && dispValSec !== 0) {
-				dispValSec -= 1;
+				//to update and display timer
+				dispValSec--;
 				updateDisplay();
 			} else if (dispValMin === 0 && dispValSec === 0) {
 				isBreak = false;
 				dispValMin = sessionCtr;
 				dispValSec = 0;
 				$("#timer-label").text("Session");
+				updateDisplay();
 				document.getElementById("beep").play();
 				document.getElementById("beep").muted = false;
-				updateDisplay();
 			}
 		}
 	};
@@ -107,32 +116,30 @@ $(document).ready(function () {
 		dispValSec = parseInt(dispVal[1]);
 
 		if (isPlay === false) {
-			// start timer...
-			// setInterval (funzione callback, intervallo di tempo in ms)
+			//start the timer...
 			isPlay = true;
 			setInt_ID = setInterval(updateTimer, 1000);
-		} else {
-			// stop timer...
-			// clearInterval(ID)
+		} else if (isPlay === true) {
+			//stop the timer...
 			isPlay = false;
 			clearInterval(setInt_ID);
 		}
 	});
 
-    // quando clicco il reset
-    $("#reset").click(function () {
-        breakCtr = 5;
-        sessionCtr = 25;
-        $("#break-length").text(breakCtr);
-        $("#session-length").text(sessionCtr);
-        tmp = sessionCtr + ":" + "00";
-        $("#time-left").text(tmp);
-        $("#time-label").text("Session");
-        clearInterval(setInt_ID);
-        isPlay = false;
-        isBreak = false;
-        let clip = document.getElementById("beep");
-        clip.pause();
-        clip.currentTime = 0;
-    });
+	// quando clicco il reset
+	$("#reset").click(function () {
+		breakCtr = 5;
+		sessionCtr = 25;
+		$("#break-length").text(breakCtr);
+		$("#session-length").text(sessionCtr);
+		clearInterval(setInt_ID);
+		tmp = sessionCtr + ":" + "00";
+		$("#time-left").text(tmp);
+		$("#timer-label").text("Session");
+		isPlay = false;
+		isBreak = false;
+		let clip = document.getElementById("beep");
+		clip.pause();
+		clip.currentTime = 0;
+	});
 });
